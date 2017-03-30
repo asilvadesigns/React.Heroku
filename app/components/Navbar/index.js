@@ -5,7 +5,7 @@ import CONFIG from 'Config';
 import SX from './style';
 
 /*
- *navbar
+ *  navbar
  */
 const Navbar = () => (
   <nav style={SX.navbar}>
@@ -15,7 +15,7 @@ const Navbar = () => (
 )
 
 /*
- *navbar links
+ *  navbar links
  */
 const Navlinks = () => (
   <div style={SX.navgroup}>
@@ -33,13 +33,11 @@ const Navlinks = () => (
 )
 
 /*
- *navbar login
+ *  navbar login
  */
 const Navlogin = () => (
   <div style={{...SX.navgroup, ...SX.navlogin}}>
-    <span style={SX.navlinks}>
-      <Login />
-    </span>
+    <Login style={SX.navlinks}/>
   </div>
 )
 

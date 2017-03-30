@@ -1,31 +1,32 @@
 /*
- *navbar
+ *  navbar
  */
 const Navbar = {
   display: 'flex',
   borderBottom: '1px solid',
-  marginBottom: '1rem'
+  marginBottom: '1rem',
 }
 
 /*
- *navbar group
+ *  navbar group
  */
 const Navgroup = {
   display: 'inline-flex',
 }
 
 /*
- *navbar login
+ *  navbar login
  */
 const Navlogin = {
   marginLeft: 'auto',
 }
 
 /*
- *navbar links
+ *  navbar links
  */
 const Navlinks = {
   display: 'inline-flex',
+  fontFamily: 'sans-serif',
   padding: '0.6rem 0.8rem',
   textDecoration: 'none',
   transition: 'opacity 0.25s ease-in-out',
