@@ -4,50 +4,59 @@ import CONFIG from 'Config';
 class ListUsers extends Component {
   constructor() {
     super();
-    this.state = { users: [], ideas: [] }
+    this.state = { ideas: [] }
+    this.removeIdea = this.removeIdea.bind(this);
   }
 
-  componentDidMount() {
-    const USERS = CONFIG.FIREBASE.database().ref('users');
-    USERS.on('value', (snapshot) => {
-      let users = [];
-      snapshot.forEach((childSnapshot) => {
-        let user = childSnapshot.val();
-        user['.key'] = childSnapshot.key;
-        users.push(user);
-      });
-      this.setState({ users: users });
-    })
+  componentWillMount() {
+    this.addDBListener();
+  }
 
+  addDBListener() {
     const IDEAS = CONFIG.FIREBASE.database().ref('ideas');
-    IDEAS.on('value', (snapshot) => {
-      let ideas = [];
-      snapshot.forEach((childSnapshot) => {
+    IDEAS.on('value', snapshot => {
+      let snapshotIdeas = [];
+      snapshot.forEach( childSnapshot => {
+
         let idea = childSnapshot.val();
-        idea['.key'] = childSnapshot.key;
-        ideas.push(idea);
+        idea['key'] = childSnapshot.key;
+        snapshotIdeas.push(idea);
+
       });
-      this.setState({ ideas: ideas });
-    })
+      this.setState({ ideas: snapshotIdeas });
+    });
+  }
+
+  removeIdea(evt) {
+    const KEY = evt.target.getAttribute('data-key');
+    console.log(evt.target.getAttribute('data-key'));
+    const REF = CONFIG.FIREBASE.database().ref('ideas/');
+    REF.child(KEY).remove()
+      .then(() => {
+        console.log('Remove succeeded.')
+      })
+      .catch((error) => {
+        console.log('Remove failed: ' + error.message)
+      });
   }
 
   render() {
-    const USERS = this.state.users;
     const IDEAS = this.state.ideas;
+    const IDEASX = {
+      margin: '0.8rem 1.0rem',
+      display: 'flex',
+      justifyContent: 'space-between',
+    }
 
     return (
       <div>
+        <header>Ideas:</header>
         <div>
-          Users:
-          {USERS.map((USERS) =>
-            <p key={USERS.key}>{USERS.name} : {USERS.email} : {USERS.lastLogin}</p>
-          )}
-        </div>
-        <br/>
-        <div>
-          Ideas:
-          {IDEAS.map((IDEAS) =>
-            <p key={IDEAS.key}>{IDEAS.idea}</p>
+          {IDEAS.map((IDEA) =>
+            <div style={IDEASX} key={IDEA.key}>
+              {IDEA.idea}
+              <button type='button' data-key={IDEA.key} onClick={this.removeIdea}>Remove</button>
+            </div>
           )}
         </div>
       </div>
@@ -58,23 +67,22 @@ class ListUsers extends Component {
 class Test extends Component {
   constructor() {
     super();
-
     this.state = { newIdeaValue: '' }
-
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(evt) {
-    this.setState({ newIdeaValue: evt.target.value })
+    this.setState({ newIdeaValue: evt.target.value });
   }
 
   handleClick() {
     const IDEAS = CONFIG.FIREBASE.database().ref('ideas');
-    const newIdeaRef = IDEAS.push();
-    newIdeaRef.set({
-      idea: this.state.newIdeaValue
-    })
+    const newIdea = IDEAS.push();
+    newIdea.set({ idea: this.state.newIdeaValue });
+    this.setState({ newIdeaValue: '' });
+    this.textInput.value = '';
+    this.textInput.focus();
   }
 
   render() {
@@ -82,7 +90,7 @@ class Test extends Component {
       <div>
         <ListUsers />
         <br/>
-        <input type="text" onChange={this.handleChange}/>
+        <input type="text" onChange={this.handleChange} ref={input => {this.textInput = input;}}/>
         <br/>
         <button type='button' onClick={this.handleClick}>Add some stuff.</button>
       </div>
