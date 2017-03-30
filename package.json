@@ -4,7 +4,10 @@
   "description": "Experimenting with react and heroku",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server -d",
+    "prod": "NODE_ENV=production node server.js",
+    "build": "webpack -p",
+    "postinstall": "webpack -p"
   },
   "repository": {
     "type": "git",
