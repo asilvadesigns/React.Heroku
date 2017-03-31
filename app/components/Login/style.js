@@ -11,6 +11,13 @@ const Button = {
 }
 
 /*
+ *message
+ */
+const Message = {
+  paddingRight: '0'
+}
+
+/*
  *  login
  */
 const Login = {
@@ -26,6 +33,7 @@ const Logout = {
 
 const SX = {
   button: Button,
+  message: Message,
   login: Login,
   logout: Logout
 }

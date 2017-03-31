@@ -23,7 +23,7 @@ class Login extends Component {
   setLoginState(user, isLoggedIn) {
     this.setState({
       loggedIn: isLoggedIn,
-      userName: isLoggedIn ? user : ''
+      userName: isLoggedIn ? user.displayName : ''
     })
   }
 
@@ -75,13 +75,22 @@ class Login extends Component {
    *  if logged in then show logout etc...
    */
   render() {
+    const greeting = (
+      <span style={{ ...this.props.style, ...SX.message }}>
+        Hello {this.state.userName}.
+      </span>
+    );
+
     return (
-      <button
-        style={{ ...this.props.style, ...SX.button }}
-        type='button'
-        onClick={ this.state.loggedIn ? this.logout : this.login }>
-        { this.state.loggedIn ? 'Logout' : 'Login' }
-      </button>
+      <div>
+        { this.state.loggedIn ? greeting : '' }
+        <button
+          style={{ ...this.props.style, ...SX.button }}
+          type='button'
+          onClick={ this.state.loggedIn ? this.logout : this.login }>
+          { this.state.loggedIn ? `Logout` : `Login` }
+        </button>
+      </div>
     )
   }
 }
