@@ -26,7 +26,7 @@ const Routes = [
     path: '/test',
     component: Test,
     order: 3,
-    title: 'Test',
+    title: 'Ideas',
   }
 ]
 

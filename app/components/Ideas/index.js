@@ -29,7 +29,6 @@ class ListUsers extends Component {
 
   removeIdea(evt) {
     const KEY = evt.target.getAttribute('data-key');
-    console.log(evt.target.getAttribute('data-key'));
     const REF = CONFIG.FIREBASE.database().ref('ideas/');
     REF.child(KEY).remove()
       .then(() => {
@@ -64,7 +63,7 @@ class ListUsers extends Component {
   }
 }
 
-class Test extends Component {
+class Ideas extends Component {
   constructor() {
     super();
     this.state = { newIdeaValue: '' }
@@ -98,4 +97,4 @@ class Test extends Component {
   }
 }
 
-export default Test;
+export default Ideas;

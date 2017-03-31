@@ -1,7 +1,11 @@
 import React from 'react';
+import Ideas from 'Components/Ideas';
 
 const Test = () => (
-  <div>Test</div>
+  <div>
+    Test
+    <Test/>
+  </div>
 )
 
-export default Test;
+export default Ideas;
