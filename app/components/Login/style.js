@@ -14,28 +14,12 @@ const Button = {
  *message
  */
 const Message = {
-  paddingRight: '0'
-}
-
-/*
- *  login
- */
-const Login = {
-
-}
-
-/*
- *  logout
- */
-const Logout = {
-
+  paddingRight: '0',
 }
 
 const SX = {
   button: Button,
   message: Message,
-  login: Login,
-  logout: Logout
 }
 
 export default SX;
